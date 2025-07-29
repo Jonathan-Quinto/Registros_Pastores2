@@ -46,7 +46,6 @@
 <body>
   <!-- Fondo con overlay -->
   <div class="fondo"></div>
-  
   <div class="overlay"></div>
 
   <main class="form-container">
@@ -60,101 +59,95 @@
     </header>
 
     <!-- Formulario -->
-  <form id="registroForm" action="https://script.google.com/macros/s/AKfycbwbz_IyPpvgM75Ujt86SfzDCBNJp6YCF3_UZcjET-6N/dev" method="POST">
-  <div class="campo">
-    <label for="nombre">
-      <i class="fas fa-user"></i> 
-      Nombre <span class="requerido">*</span>
-    </label>
-    <input 
-      type="text" 
-      id="nombre" 
-      name="nombre"
-      required 
-      maxlength="50"
-      placeholder="Ej: Juan"
-      autocomplete="given-name"
-    />
-  </div>
+    <form id="registroForm">
+      <div class="campo">
+        <label for="nombre">
+          <i class="fas fa-user"></i> 
+          Nombre <span class="requerido">*</span>
+        </label>
+        <input 
+          type="text" 
+          id="nombre" 
+          name="nombre"
+          required 
+          maxlength="50"
+          placeholder="Ej: Juan"
+          autocomplete="given-name"
+        />
+      </div>
 
-  <div class="campo">
-    <label for="apellido">
-      <i class="fas fa-user"></i> 
-      Apellido <span class="requerido">*</span>
-    </label>
-    <input 
-      type="text" 
-      id="apellido" 
-      name="apellido"
-      required 
-      maxlength="50"
-      placeholder="Ej: Pérez"
-      autocomplete="family-name"
-    />
-  </div>
+      <div class="campo">
+        <label for="apellido">
+          <i class="fas fa-user"></i> 
+          Apellido <span class="requerido">*</span>
+        </label>
+        <input 
+          type="text" 
+          id="apellido" 
+          name="apellido"
+          required 
+          maxlength="50"
+          placeholder="Ej: Pérez"
+          autocomplete="family-name"
+        />
+      </div>
 
-  <div class="campo">
-    <label for="correo">
-      <i class="fas fa-envelope"></i> 
-      Correo electrónico <span class="requerido">*</span>
-    </label>
-    <input 
-      type="email" 
-      id="correo" 
-      name="correo"
-      required
-      placeholder="ejemplo@correo.com"
-      autocomplete="email"
-    />
-  </div>
+      <div class="campo">
+        <label for="email">
+          <i class="fas fa-envelope"></i> 
+          Correo electrónico <span class="requerido">*</span>
+        </label>
+        <input 
+          type="email" 
+          id="email" 
+          name="email"
+          required
+          placeholder="ejemplo@correo.com"
+          autocomplete="email"
+        />
+      </div>
 
-  <div class="campo">
-    <label for="telefono">
-      <i class="fas fa-phone"></i> 
-      Teléfono <span class="requerido">*</span>
-    </label>
-    <input 
-      type="tel" 
-      id="telefono" 
-      name="telefono"
-      required
-      maxlength="20"
-      placeholder="Ej: +58 412-1234567"
-      autocomplete="tel"
-    />
-  </div>
+      <div class="campo">
+        <label for="telefono">
+          <i class="fas fa-phone"></i> 
+          Teléfono <span class="requerido">*</span>
+        </label>
+        <input 
+          type="tel" 
+          id="telefono" 
+          name="telefono"
+          required
+          maxlength="20"
+          placeholder="Ej: +58 412-1234567"
+          autocomplete="tel"
+        />
+      </div>
 
-  <div class="campo">
-    <label for="iglesia">
-      <i class="fas fa-church"></i> 
-      Iglesia / Congregación <span class="requerido">*</span>
-    </label>
-    <input 
-      type="text" 
-      id="iglesia" 
-      name="iglesia"
-      required 
-      maxlength="150"
-      placeholder="Ej: Iglesia Bautista Central"
-      autocomplete="organization"
-    />
-  </div>
+      <div class="campo">
+        <label for="iglesia">
+          <i class="fas fa-church"></i> 
+          Iglesia / Congregación <span class="requerido">*</span>
+        </label>
+        <input 
+          type="text" 
+          id="iglesia" 
+          name="iglesia"
+          required 
+          maxlength="150"
+          placeholder="Ej: Iglesia Bautista Central"
+          autocomplete="organization"
+        />
+      </div>
 
-  <button type="submit" class="btn-submit">
-    <i class="fas fa-check-circle"></i> 
-    Confirmar Asistencia
-  </button>
-</form>
+      <button type="submit" class="btn-submit">
+        <i class="fas fa-check-circle"></i> 
+        Confirmar Asistencia
+      </button>
+    </for>
 
-
-    <!-- Área de mensajes -->
-    <div id="mensaje" class="mensaje" style="display: none;"></div>
-    
-    <!-- Estadísticas opcionales -->
-    <div id="stats" class="stats-container" style="display: none;"></div>
+    <div id="mensaje" class="mensaje" style="display:none;"></div>
   </main>
 
-  <!-- Footer opcional -->
   <footer class="form-footer">
     <p>
       <i class="fas fa-shield-alt"></i>
@@ -162,25 +155,13 @@
     </p>
   </footer>
 
-  <!-- Loading indicator -->
-  <div id="loading" class="loading-overlay" style="display: none;">
+  <div id="loading" class="loading-overlay" style="display:none;">
     <div class="loading-spinner">
       <i class="fas fa-spinner fa-spin"></i>
       <p>Procesando registro...</p>
     </div>
   </div>
 
-  <!-- Scripts -->
   <script src="script.js"></script>
-  
-  <!-- Google Analytics (opcional) -->
-  
-  <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'GA_MEASUREMENT_ID');
-  </script>
 </body>
 </html>
