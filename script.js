@@ -2,12 +2,17 @@ const form = document.getElementById("registroForm");
 const mensaje = document.getElementById("mensaje");
 const loadingOverlay = document.getElementById("loading");
 
+// URL de tu Google Apps Script Web App
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxFlzHwkWMzspVvmXcKrO0JlX4DqEKLvS9VK2EITsRQY7vl8i6W7EcDfwUxFNLQ1qxk/exec";
+
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
+  // Ocultar mensaje anterior y mostrar loading
   mensaje.style.display = "none";
   loadingOverlay.style.display = "block";
 
+  // Recopilar datos del formulario
   const datos = {
     nombre: form.nombre.value.trim(),
     apellido: form.apellido.value.trim(),
@@ -16,28 +21,56 @@ form.addEventListener("submit", async (e) => {
     iglesia: form.iglesia.value.trim()
   };
 
+  console.log('Enviando datos:', datos);
+
   try {
-const res = await fetch("https://script.google.com/macros/s/AKfycbxx4IGmvgkbspFC1fxLK4W48Bpy3DcdSqNjnePkcgPPbOO4tm5hQQcqsjXNgXmReJW0/exec", {
+    const response = await fetch(SCRIPT_URL, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(datos)
     });
 
-    if (res.ok) {
-      mensaje.style.color = "green";
-      mensaje.textContent = "¡Registro enviado con éxito!";
+    console.log('Response status:', response.status);
+    console.log('Response headers:', response.headers);
+
+    // Intentar parsear la respuesta
+    const result = await response.text();
+    console.log('Response text:', result);
+
+    let jsonResult;
+    try {
+      jsonResult = JSON.parse(result);
+    } catch (parseError) {
+      console.error('Error parsing JSON:', parseError);
+      throw new Error('Respuesta inválida del servidor');
+    }
+
+    if (jsonResult.result === "success") {
+      mostrarMensaje("¡Registro enviado con éxito! Gracias por confirmar tu asistencia.", "success");
       form.reset();
     } else {
-      throw new Error("Error en la solicitud");
+      throw new Error(jsonResult.message || "Error desconocido en el servidor");
     }
+
   } catch (error) {
-    mensaje.style.color = "red";
-    mensaje.textContent = "Error enviando los datos. Intente nuevamente.";
-    console.error(error);
+    console.error('Error completo:', error);
+    mostrarMensaje(`Error enviando los datos: ${error.message}. Intente nuevamente.`, "error");
   } finally {
     loadingOverlay.style.display = "none";
-    mensaje.style.display = "block";
   }
 });
+
+function mostrarMensaje(texto, tipo) {
+  mensaje.textContent = texto;
+  mensaje.className = `mensaje ${tipo}`;
+  mensaje.style.display = "block";
+  
+  // Auto-ocultar después de 5 segundos si es éxito
+  if (tipo === "success") {
+    setTimeout(() => {
+      mensaje.style.display = "none";
+    }, 5000);
+  }
+}
