@@ -11,7 +11,7 @@
   <meta name="author" content="Organización de la Cena">
   
   <!-- PWA Meta Tags -->
-  <meta name="theme-color" content="#c0392b">
+  <meta name="theme-color" content="#2563eb">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Registro Cena">
@@ -20,14 +20,13 @@
   <link rel="icon" href="favicon.ico" />
   <link rel="apple-touch-icon" href="icon-192.png">
   
-  <!-- Manifest para PWA -->
-  <link rel="manifest" href="manifest.json">
-  
-  <!-- Estilos -->
-  <link rel="stylesheet" href="style.css" />
-  
   <!-- FontAwesome -->
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" />
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
   <!-- Schema.org para SEO -->
   <script type="application/ld+json">
@@ -42,126 +41,819 @@
     }
   }
   </script>
+
+  <style>
+    /* Reset y configuración base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Variables CSS - Diseño Tech Minimalista */
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-light: #3b82f6;
+      --secondary: #64748b;
+      --accent: #06b6d4;
+      --success: #10b981;
+      --error: #ef4444;
+      --warning: #f59e0b;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --surface: #ffffff;
+      --surface-elevated: #f8fafc;
+      --border: #e2e8f0;
+      --border-focus: #2563eb;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+      --radius: 12px;
+      --radius-lg: 16px;
+      --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      --backdrop-blur: blur(12px);
+    }
+
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('pictures/collage.jpeg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: -2;
+      opacity: 0.4;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        135deg,
+        rgba(37, 99, 235, 0.1) 0%,
+        rgba(6, 182, 212, 0.05) 25%,
+        rgba(16, 185, 129, 0.05) 50%,
+        rgba(37, 99, 235, 0.1) 100%
+      );
+      backdrop-filter: var(--backdrop-blur);
+      -webkit-backdrop-filter: var(--backdrop-blur);
+      z-index: -1;
+    }
+
+    .grid-pattern {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(37, 99, 235, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37, 99, 235, 0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+      z-index: -1;
+      animation: gridMove 20s linear infinite;
+    }
+
+    @keyframes gridMove {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(50px, 50px); }
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      line-height: 1.6;
+      color: var(--text-primary);
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    }
+
+    .container {
+      width: 100%;
+      max-width: 480px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .form-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: var(--backdrop-blur);
+      -webkit-backdrop-filter: var(--backdrop-blur);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: var(--shadow-xl);
+      padding: 2rem;
+      animation: slideUp 0.6s ease-out;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .form-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 50%, var(--success) 100%);
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(32px) scale(0.96);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .header h1 {
+      font-size: 1.875rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .header h1 i {
+      color: var(--primary);
+      font-size: 1.5rem;
+    }
+
+    .header p {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .form-group label i {
+      color: var(--primary);
+      width: 16px;
+      font-size: 0.875rem;
+    }
+
+    .required {
+      color: var(--error);
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 0.9375rem;
+      font-family: inherit;
+      background: var(--surface);
+      color: var(--text-primary);
+      transition: var(--transition);
+      outline: none;
+    }
+
+    .form-input:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      transform: translateY(-1px);
+    }
+
+    .form-input:valid:not(:placeholder-shown) {
+      border-color: var(--success);
+    }
+
+    .form-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .form-select {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 0.9375rem;
+      font-family: inherit;
+      background: var(--surface);
+      color: var(--text-primary);
+      transition: var(--transition);
+      outline: none;
+      cursor: pointer;
+    }
+
+    .form-select:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .submit-btn {
+      width: 100%;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 1rem 1.5rem;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .submit-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+      background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .submit-btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .submit-btn:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .message {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: var(--radius);
+      font-weight: 500;
+      text-align: center;
+      animation: fadeInUp 0.3s ease-out;
+      border-left: 4px solid;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .message.success {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--success);
+      border-color: var(--success);
+    }
+
+    .message.error {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--error);
+      border-color: var(--error);
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: var(--backdrop-blur);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .loading-content {
+      text-align: center;
+      padding: 2rem;
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-xl);
+      border: 1px solid var(--border);
+    }
+
+    .loading-content i {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 640px) {
+      .form-card {
+        padding: 1.5rem;
+        margin: 0.5rem;
+      }
+      
+      .header h1 {
+        font-size: 1.5rem;
+      }
+      
+      .form-input {
+        font-size: 16px;
+      }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .form-card {
+        background: rgba(15, 23, 42, 0.95);
+        border-color: rgba(51, 65, 85, 0.3);
+      }
+      
+      .loading-overlay {
+        background: rgba(15, 23, 42, 0.9);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
 </head>
 <body>
-  <!-- Fondo con overlay -->
-  <div class="fondo"></div>
+  <div class="background"></div>
   <div class="overlay"></div>
+  <div class="grid-pattern"></div>
 
-  <main class="form-container">
-    <!-- Header -->
-    <header class="form-header">
-      <h1>
-        <i class="fas fa-utensils"></i>
-        Registro para la Cena
-      </h1>
-      <p class="subtitulo">Por favor completa el formulario para confirmar tu asistencia</p>
-    </header>
-
-    <!-- Formulario -->
-    <form id="registroForm">
-      <div class="campo">
-        <label for="nombre">
-          <i class="fas fa-user"></i> 
-          Nombre <span class="requerido">*</span>
-        </label>
-        <input 
-          type="text" 
-          id="nombre" 
-          name="nombre"
-          required 
-          maxlength="50"
-          placeholder="Ej: Juan"
-          autocomplete="given-name"
-        />
+  <div class="container">
+    <div class="form-card">
+      <div class="header">
+        <h1>
+          <i class="fas fa-utensils"></i>
+          Registro para la Cena
+        </h1>
+        <p>Complete el formulario para confirmar su asistencia</p>
       </div>
 
-      <div class="campo">
-        <label for="apellido">
-          <i class="fas fa-user"></i> 
-          Apellido <span class="requerido">*</span>
-        </label>
-        <input 
-          type="text" 
-          id="apellido" 
-          name="apellido"
-          required 
-          maxlength="50"
-          placeholder="Ej: Pérez"
-          autocomplete="family-name"
-        />
+      <form id="registroForm" novalidate>
+        <div class="form-group">
+          <label for="nombre">
+            <i class="fas fa-user"></i>
+            Nombre <span class="required">*</span>
+          </label>
+          <div class="input-wrapper">
+            <input 
+              type="text" 
+              id="nombre" 
+              name="nombre"
+              class="form-input"
+              required 
+              maxlength="50"
+              placeholder="Ingrese su nombre"
+              autocomplete="given-name"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="apellido">
+            <i class="fas fa-user"></i>
+            Apellido <span class="required">*</span>
+          </label>
+          <div class="input-wrapper">
+            <input 
+              type="text" 
+              id="apellido" 
+              name="apellido"
+              class="form-input"
+              required 
+              maxlength="50"
+              placeholder="Ingrese su apellido"
+              autocomplete="family-name"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">
+            <i class="fas fa-envelope"></i>
+            Correo electrónico <span class="required">*</span>
+          </label>
+          <div class="input-wrapper">
+            <input 
+              type="email" 
+              id="email" 
+              name="email"
+              class="form-input"
+              required
+              placeholder="ejemplo@correo.com"
+              autocomplete="email"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="telefono">
+            <i class="fas fa-phone"></i>
+            Teléfono <span class="required">*</span>
+          </label>
+          <div class="input-wrapper">
+            <input 
+              type="tel" 
+              id="telefono" 
+              name="telefono"
+              class="form-input"
+              required
+              maxlength="20"
+              placeholder="+58 412-1234567"
+              autocomplete="tel"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="iglesia">
+            <i class="fas fa-church"></i>
+            Iglesia / Congregación <span class="required">*</span>
+          </label>
+          <div class="input-wrapper">
+            <input 
+              type="text" 
+              id="iglesia" 
+              name="iglesia"
+              class="form-input"
+              required 
+              maxlength="150"
+              placeholder="Nombre de su iglesia"
+              autocomplete="organization"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmacion">
+            <i class="fas fa-check-circle"></i>
+            Estado de Confirmación
+          </label>
+          <div class="input-wrapper">
+            <select 
+              id="confirmacion" 
+              name="confirmacion"
+              class="form-select"
+            >
+              <option value="PENDIENTE">Pendiente</option>
+              <option value="SI">Confirmado - SÍ</option>
+              <option value="NO">Confirmado - NO</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn" id="btnSubmit">
+          <i class="fas fa-paper-plane"></i>
+          Confirmar Asistencia
+        </button>
+      </form>
+
+      <div id="mensaje" class="message" style="display:none;"></div>
+
+      <div class="footer">
+        <p>
+          <i class="fas fa-shield-alt"></i>
+          Sus datos están protegidos y solo serán utilizados para el evento
+        </p>
       </div>
-
-      <div class="campo">
-        <label for="email">
-          <i class="fas fa-envelope"></i> 
-          Correo electrónico <span class="requerido">*</span>
-        </label>
-        <input 
-          type="email" 
-          id="email" 
-          name="email"
-          required
-          placeholder="ejemplo@correo.com"
-          autocomplete="email"
-        />
-      </div>
-
-      <div class="campo">
-        <label for="telefono">
-          <i class="fas fa-phone"></i> 
-          Teléfono <span class="requerido">*</span>
-        </label>
-        <input 
-          type="tel" 
-          id="telefono" 
-          name="telefono"
-          required
-          maxlength="20"
-          placeholder="Ej: +58 412-1234567"
-          autocomplete="tel"
-        />
-      </div>
-
-      <div class="campo">
-        <label for="iglesia">
-          <i class="fas fa-church"></i> 
-          Iglesia / Congregación <span class="requerido">*</span>
-        </label>
-        <input 
-          type="text" 
-          id="iglesia" 
-          name="iglesia"
-          required 
-          maxlength="150"
-          placeholder="Ej: Iglesia Bautista Central"
-          autocomplete="organization"
-        />
-      </div>
-
-      <button type="submit" class="btn-submit">
-        <i class="fas fa-check-circle"></i> 
-        Confirmar Asistencia
-      </button>
-    </form>
-
-    <div id="mensaje" class="mensaje" style="display:none;"></div>
-  </main>
-
-  <footer class="form-footer">
-    <p>
-      <i class="fas fa-shield-alt"></i>
-      Tus datos están protegidos y solo serán usados para la organización del evento
-    </p>
-  </footer>
+    </div>
+  </div>
 
   <div id="loading" class="loading-overlay" style="display:none;">
-    <div class="loading-spinner">
-      <i class="fas fa-spinner fa-spin"></i>
+    <div class="loading-content">
+      <i class="fas fa-spinner"></i>
       <p>Procesando registro...</p>
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('✅ DOM cargado correctamente');
+      
+      // Seleccionar elementos del DOM
+      const form = document.getElementById("registroForm");
+      const mensaje = document.getElementById("mensaje");
+      const loadingOverlay = document.getElementById("loading");
+      const btnSubmit = document.getElementById("btnSubmit");
+
+      // Verificar que todos los elementos existen
+      if (!form || !mensaje || !loadingOverlay || !btnSubmit) {
+        console.error('❌ Elementos del DOM no encontrados');
+        return;
+      }
+
+      console.log('✅ Todos los elementos DOM encontrados');
+
+      // ✅ URL actualizada de Google Apps Script
+      const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxFlzHwkWMzspVvmXcKrO0JlX4DqEKLvS9VK2EITsRQY7vl8i6W7EcDfwUxFNLQ1qxk/exec";
+
+      // Función para mostrar mensajes
+      function mostrarMensaje(texto, tipo) {
+        console.log(`📢 Mostrando mensaje: ${tipo} - ${texto}`);
+        mensaje.textContent = texto;
+        mensaje.className = `message ${tipo}`;
+        mensaje.style.display = "block";
+        
+        // Auto-ocultar después de 8 segundos si es éxito
+        if (tipo === "success") {
+          setTimeout(() => {
+            mensaje.style.display = "none";
+          }, 8000);
+        }
+      }
+
+      // Función de validación local (complementa la del servidor)
+      function validarFormulario(datos) {
+        const errores = [];
+        
+        if (!datos.Nombre || datos.Nombre.length < 2) {
+          errores.push('El nombre debe tener al menos 2 caracteres');
+        }
+        
+        if (!datos.Apellido || datos.Apellido.length < 2) {
+          errores.push('El apellido debe tener al menos 2 caracteres');
+        }
+        
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!datos.Correo || !emailRegex.test(datos.Correo)) {
+          errores.push('El correo electrónico no es válido');
+        }
+        
+        if (!datos.Telefono || datos.Telefono.length < 8) {
+          errores.push('El teléfono debe tener al menos 8 caracteres');
+        }
+        
+        if (!datos.Iglesia || datos.Iglesia.length < 3) {
+          errores.push('El nombre de la iglesia debe tener al menos 3 caracteres');
+        }
+        
+        return errores;
+      }
+
+      // Event listener principal del formulario
+      form.addEventListener("submit", async function(e) {
+        e.preventDefault();
+        console.log('🚀 Formulario enviado');
+
+        // Ocultar mensaje anterior y mostrar loading
+        mensaje.style.display = "none";
+        loadingOverlay.style.display = "block";
+        btnSubmit.disabled = true;
+        btnSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+
+        // 🔧 CORREGIDO: Mapear correctamente los campos del formulario
+        const datos = {
+          Nombre: form.nombre.value.trim(),          // Campo 'nombre' → 'Nombre'
+          Apellido: form.apellido.value.trim(),      // Campo 'apellido' → 'Apellido'
+          Correo: form.email.value.trim(),           // Campo 'email' → 'Correo'
+          Telefono: form.telefono.value.trim(),      // Campo 'telefono' → 'Telefono'
+          Iglesia: form.iglesia.value.trim(),        // Campo 'iglesia' → 'Iglesia'
+          Confirmacion: form.confirmacion.value      // Campo 'confirmacion' → 'Confirmacion'
+        };
+
+        console.log('📝 Datos recopilados:', datos);
+
+        // Validación local
+        const errores = validarFormulario(datos);
+        if (errores.length > 0) {
+          console.error('❌ Errores de validación local:', errores);
+          loadingOverlay.style.display = "none";
+          btnSubmit.disabled = false;
+          btnSubmit.innerHTML = '<i class="fas fa-paper-plane"></i> Confirmar Asistencia';
+          mostrarMensaje(`Por favor corrige: ${errores.join(', ')}`, "error");
+          return;
+        }
+
+        try {
+          console.log('📡 Enviando datos a:', SCRIPT_URL);
+          
+          // 🔥 SOLUCIÓN CORS: Usar FormData para evitar preflight requests
+          const formData = new URLSearchParams();
+          formData.append('Nombre', datos.Nombre);
+          formData.append('Apellido', datos.Apellido);
+          formData.append('Correo', datos.Correo);
+          formData.append('Telefono', datos.Telefono);
+          formData.append('Iglesia', datos.Iglesia);
+          formData.append('Confirmacion', datos.Confirmacion);
+          
+          console.log('📦 FormData preparado:', [...formData.entries()]);
+          
+          const response = await fetch(SCRIPT_URL, {
+            method: "POST",
+            body: formData,
+            mode: 'cors',
+            cache: 'no-cache'
+          });
+
+          console.log('📊 Response status:', response.status);
+          console.log('📊 Response ok:', response.ok);
+
+          // Obtener y procesar la respuesta
+          const responseText = await response.text();
+          console.log('📄 Response text:', responseText);
+
+          let jsonResult;
+          try {
+            jsonResult = JSON.parse(responseText);
+            console.log('✅ JSON parseado correctamente:', jsonResult);
+          } catch (parseError) {
+            console.error('❌ Error parseando JSON:', parseError);
+            console.log('📄 Respuesta cruda:', responseText);
+            
+            // Verificar si la respuesta indica éxito aunque no sea JSON válido
+            if (responseText.includes('success') || 
+                responseText.includes('guardados correctamente') || 
+                response.ok) {
+              console.log('🎉 Éxito detectado en respuesta no-JSON');
+              jsonResult = { result: "success", message: "Datos guardados correctamente" };
+            } else if (responseText.includes('<html') || responseText.includes('<!DOCTYPE')) {
+              throw new Error('Error de autenticación en Google Apps Script. Verifica los permisos del script.');
+            } else {
+              throw new Error(`Respuesta del servidor no válida: ${responseText.substring(0, 100)}`);
+            }
+          }
+
+          // Verificar resultado y mostrar mensaje apropiado
+          if (jsonResult && (jsonResult.result === "success" || response.ok)) {
+            console.log('🎉 ¡Registro exitoso!');
+            mostrarMensaje(
+              jsonResult.message || "¡Registro enviado con éxito! Gracias por confirmar tu asistencia. Te esperamos en la cena.", 
+              "success"
+            );
+            
+            // Limpiar formulario
+            form.reset();
+            
+            // Efecto confetti opcional (si está disponible)
+            if (typeof confetti !== 'undefined') {
+              confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+              });
+            }
+            
+          } else {
+            console.error('❌ Error del servidor:', jsonResult);
+            throw new Error(jsonResult?.message || jsonResult?.error || "Error desconocido del servidor");
+          }
+
+        } catch (error) {
+          console.error('💥 Error completo:', error);
+          console.error('💥 Stack trace:', error.stack);
+          
+          // Mensajes de error más específicos
+          let mensajeError = "Error enviando los datos. ";
+          
+          if (error.name === 'TypeError' && error.message.includes('fetch')) {
+            mensajeError += "Problema de conexión a internet. Verifica tu conexión.";
+          } else if (error.message.includes('autenticación')) {
+            mensajeError += "Problema de configuración del servidor. Contacta al administrador.";
+          } else if (error.message.includes('CORS')) {
+            mensajeError += "Problema de permisos del servidor. Contacta al administrador.";
+          } else if (error.message.includes('network')) {
+            mensajeError += "Error de red. Verifica tu conexión a internet.";
+          } else {
+            mensajeError += error.message;
+          }
+          
+          mensajeError += " Por favor, intenta nuevamente o contacta al administrador.";
+          mostrarMensaje(mensajeError, "error");
+          
+        } finally {
+          // Restaurar estado del botón y ocultar loading
+          loadingOverlay.style.display = "none";
+          btnSubmit.disabled = false;
+          btnSubmit.innerHTML = '<i class="fas fa-paper-plane"></i> Confirmar Asistencia';
+          console.log('🏁 Proceso finalizado');
+        }
+      });
+
+      // Validación visual en tiempo real
+      const inputs = form.querySelectorAll('input[required], select[required]');
+      inputs.forEach(input => {
+        input.addEventListener('blur', function() {
+          if (this.value.trim() === '') {
+            this.style.borderColor = 'var(--error)';
+          } else {
+            this.style.borderColor = 'var(--success)';
+          }
+        });
+        
+        input.addEventListener('input', function() {
+          if (this.style.borderColor === 'var(--error)' && this.value.trim() !== '') {
+            this.style.borderColor = 'var(--border)';
+          }
+        });
+      });
+
+      console.log('✅ JavaScript inicializado correctamente');
+    });
+
+    // 🧪 Función de test de conectividad (para debugging)
+    function testConectividad() {
+      console.log('🧪 Probando conectividad...');
+      
+      const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxFlzHwkWMzspVvmXcKrO0JlX4DqEKLvS9VK2EITsRQY7vl8i6W7EcDfwUxFNLQ1qxk/exec";
+      
+      fetch(SCRIPT_URL, {
+        method: "GET"
+      })
+      .then(response => response.text())
+      .then(data => {
+        console.log('✅ Test de conectividad exitoso:', data);
+      })
+      .catch(error => {
+        console.error('❌ Error de conectividad:', error);
+      });
+    }
+
+    // Descomenta la siguiente línea para probar conectividad automáticamente
+    // testConectividad();
+  </script>
 </body>
 </html>
