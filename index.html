@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+  <title>Registro para la Cena de Pastores</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Registro oficial para la cena de pastores. Confirma tu asistencia de manera rápida y sencilla.">
+  <meta name="keywords" content="cena pastores, registro, iglesia, confirmación asistencia">
+  <meta name="author" content="Organización de la Cena">
+  
+  <!-- PWA Meta Tags -->
+  <meta name="theme-color" content="#c0392b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Registro Cena">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="icon-192.png">
+  
+  <!-- Manifest para PWA -->
+  <link rel="manifest" href="manifest.json">
+  
+  <!-- Estilos -->
+  <link rel="stylesheet" href="style.css" />
+  
+  <!-- FontAwesome -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  
+  <!-- Schema.org para SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": "Cena de Pastores",
+    "description": "Evento especial para pastores y líderes religiosos",
+    "organizer": {
+      "@type": "Organization",
+      "name": "Organización de la Cena"
+    }
+  }
+  </script>
+</head>
+<body>
+  <!-- Fondo con overlay -->
+  <div class="fondo"></div>
+  
+  <div class="overlay"></div>
+
+  <main class="form-container">
+    <!-- Header -->
+    <header class="form-header">
+      <h1>
+        <i class="fas fa-utensils"></i>
+        Registro para la Cena
+      </h1>
+      <p class="subtitulo">Por favor completa el formulario para confirmar tu asistencia</p>
+    </header>
+
+    <!-- Formulario -->
+  <form id="registroForm" action="https://script.google.com/macros/s/AKfycbwbz_IyPpvgM75Ujt86SfzDCBNJp6YCF3_UZcjET-6N/dev" method="POST">
+  <div class="campo">
+    <label for="nombre">
+      <i class="fas fa-user"></i> 
+      Nombre <span class="requerido">*</span>
+    </label>
+    <input 
+      type="text" 
+      id="nombre" 
+      name="nombre"
+      required 
+      maxlength="50"
+      placeholder="Ej: Juan"
+      autocomplete="given-name"
+    />
+  </div>
+
+  <div class="campo">
+    <label for="apellido">
+      <i class="fas fa-user"></i> 
+      Apellido <span class="requerido">*</span>
+    </label>
+    <input 
+      type="text" 
+      id="apellido" 
+      name="apellido"
+      required 
+      maxlength="50"
+      placeholder="Ej: Pérez"
+      autocomplete="family-name"
+    />
+  </div>
+
+  <div class="campo">
+    <label for="correo">
+      <i class="fas fa-envelope"></i> 
+      Correo electrónico <span class="requerido">*</span>
+    </label>
+    <input 
+      type="email" 
+      id="correo" 
+      name="correo"
+      required
+      placeholder="ejemplo@correo.com"
+      autocomplete="email"
+    />
+  </div>
+
+  <div class="campo">
+    <label for="telefono">
+      <i class="fas fa-phone"></i> 
+      Teléfono <span class="requerido">*</span>
+    </label>
+    <input 
+      type="tel" 
+      id="telefono" 
+      name="telefono"
+      required
+      maxlength="20"
+      placeholder="Ej: +58 412-1234567"
+      autocomplete="tel"
+    />
+  </div>
+
+  <div class="campo">
+    <label for="iglesia">
+      <i class="fas fa-church"></i> 
+      Iglesia / Congregación <span class="requerido">*</span>
+    </label>
+    <input 
+      type="text" 
+      id="iglesia" 
+      name="iglesia"
+      required 
+      maxlength="150"
+      placeholder="Ej: Iglesia Bautista Central"
+      autocomplete="organization"
+    />
+  </div>
+
+  <button type="submit" class="btn-submit">
+    <i class="fas fa-check-circle"></i> 
+    Confirmar Asistencia
+  </button>
+</form>
+
+
+    <!-- Área de mensajes -->
+    <div id="mensaje" class="mensaje" style="display: none;"></div>
+    
+    <!-- Estadísticas opcionales -->
+    <div id="stats" class="stats-container" style="display: none;"></div>
+  </main>
+
+  <!-- Footer opcional -->
+  <footer class="form-footer">
+    <p>
+      <i class="fas fa-shield-alt"></i>
+      Tus datos están protegidos y solo serán usados para la organización del evento
+    </p>
+  </footer>
+
+  <!-- Loading indicator -->
+  <div id="loading" class="loading-overlay" style="display: none;">
+    <div class="loading-spinner">
+      <i class="fas fa-spinner fa-spin"></i>
+      <p>Procesando registro...</p>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+  
+  <!-- Google Analytics (opcional) -->
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'GA_MEASUREMENT_ID');
+  </script>
+</body>
+</html>
